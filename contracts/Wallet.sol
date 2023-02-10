@@ -7,10 +7,9 @@ import "./LayersClient.sol";
 
 contract Wallet is LayersClient {
   using Settings for Settings.SettingToMakeATransfer;
-  using Settings for Settings.SettingToMakeATransfer;
-  using Settings for Settings.SettingToMakeATransfer;
+  using Settings for Settings.SettingToMakeAWithdrawal;
 
-  using Layers for Layers.LayerAPI;
+  using Layers for Layers.Layer;
 
 
   event HandleLayerStarted();
@@ -25,7 +24,10 @@ contract Wallet is LayersClient {
 
 
   uint256 numSettingsToMakeATransfer;
-  mapping (uint256 => Setting) SettingsToMakeATransfer;
+  mapping (uint256 => Setting.SettingToMakeATransfer) SettingsToMakeATransfer;
+
+  uint256 numSettingsToMakeAWithdrawal;
+  mapping (uint256 => Setting.SettingToMakeAWithdrawal) SettingsToMakeAWithdrawal;
 
   
   function test() public {

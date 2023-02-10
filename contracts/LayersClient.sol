@@ -8,10 +8,10 @@ abstract contract LayersClient {
   using Layers for Layers.LayerAPI;
 
 
-  function createLayerWithoutCallbacks() internal pure returns (Layers.LayerAPI memory) {
-    Layers.LayerAPI memory layerAPI;
+  function createLayerWithoutCallbacks() internal pure returns (Layers.Layer memory) {
+    Layers.Layer memory layerAPI;
 
-    return layerAPI.init(
+    return layer.init(
     );
   }
 
@@ -21,9 +21,9 @@ abstract contract LayersClient {
     bytes4 _successCallbackFunctionSignature,
     bytes4 _failureCallbackFunctionSignature
   ) internal pure returns (Layers.LayerAPI memory) {
-    Layers.LayerAPI memory layerAPI;
+    Layers.Layer memory layer;
 
-    return layerAPI.init(
+    return layer.init(
       _contractCallbackAddress,
       _startedCallbackFunctionSignature,
       _successCallbackFunctionSignature,

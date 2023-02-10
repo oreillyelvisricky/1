@@ -3,7 +3,7 @@
 pragma solidity ^0.8.7;
 
 library Layers {
-  struct LayerAPI {
+  struct Layer {
     bool isSeqSep;
 
     address contractCallbackAddress;
@@ -20,18 +20,18 @@ library Layers {
   }
 
   function initWithoutCallbacks(
-    LayerAPI memory self
-  ) internal pure returns (Layers.LayerAPI memory) {
+    Layer memory self
+  ) internal pure returns (Layers.Layer memory) {
     return self;
   }
 
   function init(
-    LayerAPI memory self,
+    Layer memory self,
     address _contractCallbackAddress,
     bytes4 _startedCallbackFunctionSignature,
     bytes4 _successCallbackFunctionSignature,
     bytes4 _failureCallbackFunctionSignature
-  ) internal pure returns (Layers.LayerAPI memory) {
+  ) internal pure returns (Layers.Layer memory) {
     self.contractCallbackAddress = _contractCallbackAddress;
     self.startedCallbackFunctionSignature = _startedCallbackFunctionSignature;
     self.successCallbackFunctionSignature = _successCallbackFunctionSignature;
@@ -39,20 +39,20 @@ library Layers {
     return self;
   }
 
-  function exec(LayerAPI memory self) internal {
+  function exec(Layer memory self) internal {
     execStarted(self);
   }
 
-  function execStarted(LayerAPI memory self) internal {
+  function execStarted(Layer memory self) internal {
     // !!! TODO check because could be vulnerable
     self.contractCallbackAddress.delegatecall(abi.encode(self.startedCallbackFunctionSignature));
   }
 
-  function execSuccess(LayerAPI memory self) internal pure {
+  function execSuccess(Layer memory self) internal pure {
     //
   }
 
-  function execFailure(LayerAPI memory self) internal pure {
+  function execFailure(Layer memory self) internal pure {
     //
   }
 }
