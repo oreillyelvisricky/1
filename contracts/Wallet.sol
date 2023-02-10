@@ -6,6 +6,9 @@ import "./LayersClient.sol";
 
 contract Wallet is LayersClient {
   using Layers for Layers.LayerAPI;
+  
+  
+  event HandleLayerStarted();
 
 
   struct Layer {
@@ -15,24 +18,26 @@ contract Wallet is LayersClient {
 
 
   function test() public {
-    Layers.LayersAPI memory layerAPI = createLayer(
+    Layers.LayerAPI memory layerAPI = createLayer(
       address(this),
       this.handleLayerStarted.selector,
       this.handleLayerSuccess.selector,
       this.handleLayerFailure.selector
     );
+
+    layerAPI.exec();
   }
 
 
-  function handleLayerStarted() {
+  function handleLayerStarted() public {
+    emit HandleLayerStarted();
+  }
+
+  function handleLayerSuccess() public {
     //
   }
 
-  function handleLayerSuccess() {
-    //
-  }
-
-  function handleLayerFailure() {
+  function handleLayerFailure() public {
     //
   }
 }

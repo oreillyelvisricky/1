@@ -33,13 +33,13 @@ library Layers {
     return self;
   }
 
-  function exec(LayerAPI memory self) internal pure {
-    execStarted();
+  function exec(LayerAPI memory self) internal {
+    execStarted(self);
   }
 
-  function execStarted(LayerAPI memory self) internal pure {
-    // delegatecall??
-    // how to call
+  function execStarted(LayerAPI memory self) internal {
+    // !!! TODO check because could be vulnerable
+    self.contractCallbackAddress.delegatecall(abi.encode(self.startedCallbackFunctionSignature));
   }
 
   function execSuccess(LayerAPI memory self) internal pure {
