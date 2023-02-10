@@ -7,6 +7,14 @@ import "./Layers.sol";
 abstract contract LayersClient {
   using Layers for Layers.LayerAPI;
 
+
+  function createLayerWithoutCallbacks() internal pure returns (Layers.LayerAPI memory) {
+    Layers.LayerAPI memory layerAPI;
+
+    return layerAPI.init(
+    );
+  }
+
   function createLayer(
     address _contractCallbackAddress,
     bytes4 _startedCallbackFunctionSignature,

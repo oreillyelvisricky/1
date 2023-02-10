@@ -2,30 +2,54 @@
 
 pragma solidity ^0.8.7;
 
+import "./SettingsClient.sol";
 import "./LayersClient.sol";
 
 contract Wallet is LayersClient {
+  using Settings for Settings.SettingToMakeATransfer;
+  using Settings for Settings.SettingToMakeATransfer;
+  using Settings for Settings.SettingToMakeATransfer;
+
   using Layers for Layers.LayerAPI;
-  
-  
+
+
   event HandleLayerStarted();
+  event HandleLayerSuccess();
+  event HandleLayerFailure();
+  
+  
+  bool queueA;
+  bool queueB;
+  bool queueC;
+  bool queueD;
 
 
-  struct Layer {
-    uint numLayerFlowLayers;
-    mapping (uint => Layers.LayerAPI) layerFlow;
-  }
+  uint256 numSettingsToMakeATransfer;
+  mapping (uint256 => Setting) SettingsToMakeATransfer;
 
-
+  
   function test() public {
-    Layers.LayerAPI memory layerAPI = createLayer(
-      address(this),
-      this.handleLayerStarted.selector,
-      this.handleLayerSuccess.selector,
-      this.handleLayerFailure.selector
-    );
+    uint256 amountMin = 0;
+    uint256 amountMax = 100;
+    bool isSeqSep = false;
 
-    layerAPI.exec();
+    Settings.SettingToMakeATransfer memory setting0 = createSettingToMakeATransfer();
+    setting0.setAmount(amountMin, amountMax);
+    setting0.setTokens(ENUM_ALL);
+    setting0.addLayer(layer0);
+    setting0.addLayer(layer1);
+    setting0.addLayer(layer2);
+
+    SettingsToMakeATransfer[0] = setting0;
+
+    Settings.SettingToMakeATransfer memory setting1 = createSettingToMakeATransfer();
+    setting1.setAmount(amountMin, amountMax);
+    setting1.setTokens(ENUM_ALL);
+    setting1.addLayer(layer0);
+    setting1.addLayer(layer1);
+    setting1.addLayer(layer2);
+
+    SettingsToMakeATransfer[1] = setting1;
   }
 
 
@@ -34,10 +58,20 @@ contract Wallet is LayersClient {
   }
 
   function handleLayerSuccess() public {
-    //
+    emit HandleLayerSuccess();
   }
 
   function handleLayerFailure() public {
-    //
+    emit HandleLayerFailure();
   }
+
+
+  function testAddLayerToMakeTransfer(
+    uint256 _amountMin,
+    uint256 _amountMax,
+  ) private {
+    addLayerToMakeTransfer(_amountMin, _amountMax);
+  }
+
+
 }

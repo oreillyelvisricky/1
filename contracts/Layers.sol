@@ -19,6 +19,12 @@ library Layers {
     bytes4 failureCallbackFunctionSignature;
   }
 
+  function initWithoutCallbacks(
+    LayerAPI memory self
+  ) internal pure returns (Layers.LayerAPI memory) {
+    return self;
+  }
+
   function init(
     LayerAPI memory self,
     address _contractCallbackAddress,

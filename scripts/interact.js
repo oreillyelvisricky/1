@@ -37,9 +37,3 @@ main().catch(error => {
 walletContract.on("HandleLayerStarted", () => {
   console.log(">>> HandleLayerStarted")
 })
-
-/*
-walletContract.on("Test", () => {
-  console.log("....... test")
-})
-*/
