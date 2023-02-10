@@ -37,7 +37,9 @@ contract Wallet is LayersClient {
 
     Settings.SettingToMakeATransfer memory setting0 = createSettingToMakeATransfer();
     setting0.setAmount(amountMin, amountMax);
-    setting0.setTokens(ENUM_ALL);
+    // setting0.setTokens(ENUM_ALL);
+    // TODO
+    Layers.Layer memory layer0 = createLayer();
     setting0.addLayer(layer0);
     setting0.addLayer(layer1);
     setting0.addLayer(layer2);
